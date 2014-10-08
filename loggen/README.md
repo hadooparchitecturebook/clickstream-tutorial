@@ -6,4 +6,4 @@ To run, just execute the following:
 
     $ ./generate_apache_logs.py
 
-This will create a file in the current directory named *combined_log_<timestamp>.log*.
+This will create a file in the current directory named *combined_log_TIMESTAMP.log*.
