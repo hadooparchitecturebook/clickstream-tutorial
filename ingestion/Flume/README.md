@@ -40,5 +40,5 @@ To run the ingestion example:
 
 * Confirm that the logs have been written to the specified directory in HDFS:
 
-   $ hadoop fs -ls /etl/BI/casualcyclist/clicks/rawlogs/year=...
+    $ hadoop fs -ls /etl/BI/casualcyclist/clicks/rawlogs/year=...
 
