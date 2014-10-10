@@ -22,17 +22,18 @@ To configure and run the example:
 
 To run the ingestion example:
 
-* Open two terminal windows to run the collector agents. In the first terminal window execute:
+* Open three terminal windows and cd into the clickstream-tutorial/ingestion/Flume directory.
+* In the first terminal window execute the following to start the first collector agent:
 
-    $ cd clickstream-tutorial/ingestion/Flume
-    $ flume-ng agent -n collector1 --conf . -f collector1.conf
-* In the second terminal window, execute:
-    $ cd clickstream-tutorial/ingestion/Flume
-    $ flume-ng agent -n collector2 --conf . -f collector2.conf 
-* Open another terminal window to run the client agent, and execute the following:
+    $ ./start_collector1.sh
 
-    $ cd clickstream-tutorial/ingestion/Flume
-    $ flume-ng agent -n client --conf . -f client.conf 
+* In the second terminal window, execute the following to start the second collector agent:
+
+    $ ./start_collector2.sh
+
+* In the third terminal window run the client agent by executing the following:
+
+    $ ./start_client.sh
 
 * Copy test logs to the local weblog directory created in the first step. You can use the fake Apache combined logs created with the * clickstream-tutorial/loggen/generate_apache_logs.py* script. For example:
 
