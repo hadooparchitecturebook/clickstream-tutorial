@@ -16,7 +16,4 @@ WITH SERDEPROPERTIES (
 )
 LOCATION '/etl/BI/casualcyclist/clicks/deduplogs';
 
--- Need to be where generated access logs are
-LOAD DATA LOCAL INPATH 'access_log*.log' OVERWRITE INTO TABLE raw_log PARTITION (year=2014, month=10, day=10);
-
-SELECT * FROM raw_log LIMIT 5;
+ALTER TABLE raw_log ADD PARTITION (year=2014, month=10, day=10);
