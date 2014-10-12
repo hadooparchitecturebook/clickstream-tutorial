@@ -15,6 +15,7 @@ FROM
 FROM (
         SELECT ip, ts, url, referrer, user_agent, UNIX_TIMESTAMP(ts,'dd/MMM/yyyy:HH:mm:ss') AS unix_ts
         FROM raw_log
+        WHERE ip NOT IN ('209.85.238.11')
 ) t) s; 
  
 -- SELECT * FROM apache_log_parquet LIMIT 5;
