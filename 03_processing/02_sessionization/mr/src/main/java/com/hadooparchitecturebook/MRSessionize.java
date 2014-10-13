@@ -83,7 +83,7 @@ public class MRSessionize {
                 // If this is the first record for this user or it's been more than the timeout since
                 // the last click from this user, let's increment the session ID.
                 if (lastTimeStamp == null || (key.getUnixTimestamp() - lastTimeStamp > SESSION_TIMEOUT_IN_MS)) {
-                    sessionId = key.getIp() + key.getUnixTimestamp();
+                    sessionId = key.getIp() + "+" key.getUnixTimestamp();
                 }
                 lastTimeStamp = key.getUnixTimestamp();
                 result.set(logRecord + " " + sessionId);

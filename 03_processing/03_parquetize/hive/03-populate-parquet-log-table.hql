@@ -5,7 +5,7 @@ ADD JAR /usr/lib/hive/lib/hive-contrib.jar;
 set parquet.compression=GZIP;
 
 -- Important to set memory parameters like this  mapreduce.map.java.opts = -Xmx4G; mapreduce.reduce.java.opts = -Xmx4G
-INSERT INTO TABLE apache_log_parquet
+INSERT OVERWRITE TABLE apache_log_parquet
 PARTITION(year=2014, month=10, day=10)
 SELECT ip, ts, url, referrer, user_agent, session_id
 FROM sessionized_log
