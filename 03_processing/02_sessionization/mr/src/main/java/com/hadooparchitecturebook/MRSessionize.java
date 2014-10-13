@@ -76,14 +76,14 @@ public class MRSessionize {
             // The sessionId generated here is per day, per IP. So, any queries
             // that will be done as if this session ID were global, would require
             // a combination of the day in question and IP as well.
-            int sessionId = 0;
+            String sessionId = null;
             Long lastTimeStamp = null;
             for (Text value : values) {
                 String logRecord = value.toString();
                 // If this is the first record for this user or it's been more than the timeout since
                 // the last click from this user, let's increment the session ID.
                 if (lastTimeStamp == null || (key.getUnixTimestamp() - lastTimeStamp > SESSION_TIMEOUT_IN_MS)) {
-                    sessionId++;
+                    sessionId = key.getIp() + key.getUnixTimestamp();
                 }
                 lastTimeStamp = key.getUnixTimestamp();
                 result.set(logRecord + " " + sessionId);
