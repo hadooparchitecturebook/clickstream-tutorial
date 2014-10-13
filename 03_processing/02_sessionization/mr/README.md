@@ -1,6 +1,13 @@
 MRSessionize
 ============
 
+To build:
+<pre>
+<code>
+mvn clean package
+</code>
+</pre>
+
 Sessionization code written in MapReduce
 
 1. You may have to copy joda-time jar to HADOOP_HOME/lib until we start building an uber jar:-(.
