@@ -32,4 +32,7 @@ for i in xrange(0,num_clicks):
 	ip = random.choice(ips)
 	useragent = random.choice(useragents)
 	referer = random.choice(referers)
-	f.write('%s - - [%s] "GET %s HTTP/1.0" 200 %s "%s" "%s"\n' % (random.choice(ips),(otime+times[i]).strftime('%d/%b/%Y:%H:%M:%S %z'),uri,random.randint(2000,5000),referer,useragent))
+        ip = random.choice(ips)
+        if i == num_clicks/2:
+           ip = "121.128.12.1"
+	f.write('%s - - [%s] "GET %s HTTP/1.0" 200 %s "%s" "%s"\n' % (ip,(otime+times[i]).strftime('%d/%b/%Y:%H:%M:%S %z'),uri,random.randint(2000,5000),referer,useragent))
