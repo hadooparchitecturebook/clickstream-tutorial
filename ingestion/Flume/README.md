@@ -12,17 +12,15 @@ To configure and run the example:
 
 * Create directory to pull logs from. The current config is set to */opt/weblogs*. To use an alternate directory, change the *client.sources.r1.spoolDir* value in *client.conf*. Make sure this directory is readable and writable by the user that will be executing the Flume agents. For example:
  
-    $ sudo mkdir /opt/weblogs
-    $ sudo chmod 777 /opt/weblogs
+    $ sudo mkdir /opt/weblogs; $ sudo chmod 777 /opt/weblogs
 
 * Create directory for the Flume file channels and make sure it's readable and writable by the user executing the Flume agents. The current configuration uses /opt/flume. As an example:
 
-    $ sudo mkdir /opt/flume
-    $ sudo chmod 1777 /opt/flume
+    $ sudo mkdir /opt/flume; $ sudo chmod 1777 /opt/flume
 
 To run the ingestion example:
 
-* Open three terminal windows and cd into the clickstream-tutorial/ingestion/Flume directory.
+* Open three terminal windows and cd into the clickstream-tutorial/ingestion/Flume directory in each terminal.
 * In the first terminal window execute the following to start the first collector agent:
 
     $ ./start_collector1.sh
