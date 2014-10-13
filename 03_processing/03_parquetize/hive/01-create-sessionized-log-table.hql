@@ -6,7 +6,7 @@ CREATE EXTERNAL TABLE sessionized_log(
         URL             STRING,
         referrer        STRING,
         user_agent      STRING,
-        session_id      INT)
+        session_id      STRING)
 PARTITIONED BY (
         year            INT,
         month           INT,

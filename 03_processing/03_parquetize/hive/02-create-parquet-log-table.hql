@@ -6,7 +6,6 @@ CREATE EXTERNAL TABLE if not exists apache_log_parquet(
         URL             STRING,
         referrer        STRING,
         user_agent      STRING,
-	ts		BIGINT,
 	session_id	INT)
 PARTITIONED BY (
 	year            INT,

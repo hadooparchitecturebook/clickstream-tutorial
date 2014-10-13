@@ -7,7 +7,8 @@ set parquet.compression=GZIP;
 -- Important to set memory parameters like this  mapreduce.map.java.opts = -Xmx4G; mapreduce.reduce.java.opts = -Xmx4G
 INSERT INTO TABLE apache_log_parquet
 PARTITION(year=2014, month=10, day=10)
-SELECT ip,ts, url, referrer, user_agent, unix_ts, session_id, year, month, day
-FROM sessionized_log;
+SELECT ip, ts, url, referrer, user_agent, session_id
+FROM sessionized_log
+WHERE year=2014 AND month=10 AND day=10;
 
 -- SELECT * FROM apache_log_parquet LIMIT 5;
