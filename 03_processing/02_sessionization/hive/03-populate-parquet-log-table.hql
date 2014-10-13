@@ -4,7 +4,10 @@ ADD JAR /usr/lib/hive/lib/hive-contrib.jar;
 
 SET hive.exec.dynamic.partition.mode=nonstrict;
 SET hive.exec.dynamic.partition=true;
- 
+
+set parquet.compression=GZIP;
+
+-- Important to set memory parameters like this  mapreduce.map.java.opts = -Xmx4G; mapreduce.reduce.java.opts = -Xmx4G
 INSERT INTO TABLE apache_log_parquet
 PARTITION(year, month, day)
 SELECT ip,ts, url, referrer, user_agent, unix_ts,
