@@ -8,7 +8,7 @@ CREATE EXTERNAL TABLE apache_log_parquet(
         URL             STRING,
         referrer        STRING,
         user_agent      STRING,
-	session_id	INT)
+	session_id	STRING)
 PARTITIONED BY (
 	year            INT,
 	month 		INT,
