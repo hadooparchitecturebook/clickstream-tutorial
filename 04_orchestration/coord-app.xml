@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<coordinator-app name="prepare-clickstream" frequency="${coord:minutes(5)}"
+                 start="${jobStart}" end="${jobEnd}"
+                 timezone="UTC"
+                 xmlns="uri:oozie:coordinator:0.1">
+  <datasets>
+    <dataset name="rawlogs" frequency="${coord:hours(1)}"
+             initial-instance="${initialDataset}" timezone="America/Los_Angeles">
+      <uri-template>hdfs://localhost:8020/etl/BI/casualcyclist/clicks/rawlogs/year=${YEAR}/month=${MONTH}/day=${DAY}</uri-template>
+      <done-flag></done-flag>
+    </dataset>
+  </datasets>
+  <input-events>
+    <data-in name="input" dataset="rawlogs">
+      <instance>${coord:current(coord:tzOffset() / 60)}</instance>
+    </data-in>
+    <data-in name="readyIndicator" dataset="rawlogs">
+      <instance>${coord:current(1 + (coord:tzOffset() / 60))}</instance>
+    </data-in>
+  </input-events>
+  <action>
+    <workflow>
+      <app-path>${workflowRoot}/processing.xml</app-path>
+      <configuration>
+        <property>
+          <name>wfInput</name>
+          <value>${coord:dataIn('input')}</value>
+        </property>
+        <property>
+          <name>wfYear</name>
+          <value>${coord:formatTime(coord:dateOffset(coord:nominalTime(), tzOffset, 'HOUR'), 'yyyy')}</value>
+        </property>
+        <property>
+          <name>wfMonth</name>
+          <value>${coord:formatTime(coord:dateOffset(coord:nominalTime(), tzOffset, 'HOUR'), 'MM')}</value>
+        </property>
+        <property>
+          <name>wfDay</name>
+          <value>${coord:formatTime(coord:dateOffset(coord:nominalTime(), tzOffset, 'HOUR'), 'dd')}</value>
+        </property>
+      </configuration>
+    </workflow>
+  </action>
+</coordinator-app>
