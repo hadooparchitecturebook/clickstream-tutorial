@@ -10,3 +10,9 @@ sudo -u hdfs hadoop fs -chmod 1777 /data/bikeshop/clickstream
 
 sudo -u hdfs hadoop fs -mkdir -p /user/$USER
 sudo -u hdfs hadoop fs -chown $USER:$USER /user/$USER
+
+sudo mkdir /opt/weblogs
+sudo chmod 777 /opt/weblogs
+
+sudo mkdir /opt/flume
+sudo chmod 1777 /opt/flume
