@@ -59,7 +59,6 @@ public final class JavaSessionize {
             "(\\d+.\\d+.\\d+.\\d+).*\\[(.*)\\].*GET (\\S+) \\S+ (\\d+) (\\d+) (\\S+) (.*)");
 
     public static File temp = Files.createTempDir();
-    public static String outputPath = new File(temp,"output").getAbsolutePath();
 
     public static class SerializableLogLine extends LogLine implements Serializable {
 
@@ -178,6 +177,14 @@ public final class JavaSessionize {
         if (args.length == 0) {
             System.err.println("Usage: JavaSessionize <master> [input file]");
             System.exit(1);
+        }
+
+        String outputPath;
+        
+        if (args.length==3) {
+            outputPath = args[2];
+        } else {
+            outputPath = new File(temp,"output").getAbsolutePath();
         }
 
         System.out.println("Output:"+outputPath);
