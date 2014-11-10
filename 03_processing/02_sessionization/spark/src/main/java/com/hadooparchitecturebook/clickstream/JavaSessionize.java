@@ -156,8 +156,8 @@ public final class JavaSessionize {
         }
     }
 
-    public static List<SerializableLogLine> sessionize(List<SerializableLogLine> lines) {
-        List<SerializableLogLine> sessionizedLines = new ArrayList<SerializableLogLine>(lines);
+    public static List<SerializableLogLine> sessionize(Iterable<SerializableLogLine> lines) {
+        List<SerializableLogLine> sessionizedLines = Lists.newArrayList(lines);
         Collections.sort(sessionizedLines);
         int sessionId = 0;
         sessionizedLines.get(0).setSessionid(sessionId);
@@ -189,7 +189,7 @@ public final class JavaSessionize {
 
         JavaRDD < String > dataSet = (args.length == 2) ? jsc.textFile(args[1]) : jsc.parallelize(testLines);
 
-        JavaPairRDD<String,SerializableLogLine>  parsed = dataSet.map(new PairFunction<String, String, SerializableLogLine>() {
+        JavaPairRDD<String,SerializableLogLine>  parsed = dataSet.mapToPair(new PairFunction<String, String, SerializableLogLine>() {
             @Override
             public Tuple2<String, SerializableLogLine> call(String s) throws Exception {
                 return new Tuple2<String,SerializableLogLine>(getIP(s),getFields(s));
@@ -197,18 +197,18 @@ public final class JavaSessionize {
         });
 
         // This groups clicks by IP address
-        JavaPairRDD<String,List<SerializableLogLine>> grouped = parsed.groupByKey();
+        JavaPairRDD<String,Iterable<SerializableLogLine>> grouped = parsed.groupByKey();
 
-        JavaPairRDD<String,List<SerializableLogLine>> sessionized = grouped.mapValues(new Function<List<SerializableLogLine>, List<SerializableLogLine>>() {
+        JavaPairRDD<String,Iterable<SerializableLogLine>> sessionized = grouped.mapValues(new Function<Iterable<SerializableLogLine>, Iterable<SerializableLogLine>>() {
             @Override
-            public List<SerializableLogLine> call(List<SerializableLogLine> logLines) throws Exception {
+            public Iterable<SerializableLogLine> call(Iterable<SerializableLogLine> logLines) throws Exception {
                 return sessionize(logLines);
             }
         });
 
-        sessionized.foreach(new VoidFunction<Tuple2<String, List<SerializableLogLine>>>() {
+        sessionized.foreach(new VoidFunction<Tuple2<String, Iterable<SerializableLogLine>>>() {
             @Override
-            public void call(Tuple2<String, List<SerializableLogLine>> stringListTuple2) throws Exception {
+            public void call(Tuple2<String, Iterable<SerializableLogLine>> stringListTuple2) throws Exception {
                 System.out.println("IP: " + stringListTuple2._1());
                 for(SerializableLogLine line: stringListTuple2._2()){
                     System.out.println(line);
@@ -221,21 +221,21 @@ public final class JavaSessionize {
         // First, grab the Lists, then flatten them,
         // then pair them with something empty to make Hadoop happy
 
-        JavaRDD<List<SerializableLogLine>> nokeys = sessionized.map(new Function<Tuple2<String, List<SerializableLogLine>>, List<SerializableLogLine>>() {
+        JavaRDD<Iterable<SerializableLogLine>> nokeys = sessionized.map(new Function<Tuple2<String, Iterable<SerializableLogLine>>, Iterable<SerializableLogLine>>() {
             @Override
-            public List<SerializableLogLine> call(Tuple2<String, List<SerializableLogLine>> stringListTuple2) throws Exception {
+            public Iterable<SerializableLogLine> call(Tuple2<String, Iterable<SerializableLogLine>> stringListTuple2) throws Exception {
                 return stringListTuple2._2();
             }
         });
 
-        JavaRDD<SerializableLogLine> flatLines = nokeys.flatMap(new FlatMapFunction<List<SerializableLogLine>, SerializableLogLine>() {
+        JavaRDD<SerializableLogLine> flatLines = nokeys.flatMap(new FlatMapFunction<Iterable<SerializableLogLine>, SerializableLogLine>() {
             @Override
-            public Iterable<SerializableLogLine> call(List<SerializableLogLine> serializableLogLines) throws Exception {
+            public Iterable<SerializableLogLine> call(Iterable<SerializableLogLine> serializableLogLines) throws Exception {
                 return serializableLogLines;
             }
         }) ;
 
-        JavaPairRDD<Void,SerializableLogLine> outputPairs = flatLines.map(new PairFunction<SerializableLogLine, Void, SerializableLogLine>() {
+        JavaPairRDD<Void,SerializableLogLine> outputPairs = flatLines.mapToPair(new PairFunction<SerializableLogLine, Void, SerializableLogLine>() {
             @Override
             public Tuple2<Void, SerializableLogLine> call(SerializableLogLine serializableLogLine) throws Exception {
                 return new Tuple2<Void, SerializableLogLine>(null,serializableLogLine);
