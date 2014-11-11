@@ -9,7 +9,7 @@ Start the tutorial by using "git clone" to create a copy of this repository on y
 
 ## To run the demo end-to-end:
 * Run setup.sh to create the directory structure needed for the tutorial (If you ran this tutorial before, you'll want to run cleanup.sh first)
-* Run 01_loggen/generate_apache_logs.py - This will create an example clickstream log in /opt/weblogs
+* Run 01_loggen/generate_apache_logs.sh - This will create an example clickstream log in /opt/weblogs
 * Follow the instructions in 02_ingestion/Flume/README.md - This will show you how to use Flume to ingest the logs we generated into Hadoop
 * Run 03_processing/01_dedup/pig/dedup.sh to remove duplicate events from the clickstream log
 * Follow the instructions in 03_processing/02_sessionization/mr/ to enrich the data with information about user sessions using MapReduce

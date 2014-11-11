@@ -7,7 +7,7 @@ otime = datetime.datetime(2014, 10, 10, 0, 0, 0)
 timestr =  time.strftime("%Y%m%d-%H%M%S", otime.timetuple())
 num_clicks = 500
  
-f = open('/opt/weblog/combined_log_'+timestr+'.log','w')
+f = open('./combined_log_'+timestr+'.log','w')
  
 ips=["123.221.14.56","16.180.70.237","10.182.189.79","218.193.16.244","198.122.118.164","114.214.178.92","233.192.62.103","244.157.45.12","81.73.150.239","237.43.24.118","237.198.29.13","129.114.19.23","104.59.986.63","114.98.234.12","119.32.344.12"]
 referers=["-","http://www.casualcyclist.com","http://bestcyclingreviews.com/top_online_shops","http://bleater.com","http://searchengine.com"]
