@@ -23,7 +23,7 @@ FROM (
     MAX(UNIX_TIMESTAMP(ts,'dd/MMM/yyyy:HH:mm:ss')) - MIN(UNIX_TIMESTAMP(ts,'dd/MMM/yyyy:HH:mm:ss')) as session_duration,
     MIN(UNIX_TIMESTAMP(ts,'dd/MMM/yyyy:HH:mm:ss')) as session_start 
   FROM
-    sessionized_log
+    apache_log_parquet
   GROUP BY
     session_id)t
 GROUP BY
