@@ -20,6 +20,7 @@
                  start="${jobStart}" end="${jobEnd}"
                  timezone="UTC"
                  xmlns="uri:oozie:coordinator:0.1">
+
   <datasets>
     <dataset name="rawlogs" frequency="${coord:hours(1)}"
              initial-instance="${initialDataset}" timezone="America/Los_Angeles">
@@ -27,6 +28,7 @@
       <done-flag></done-flag>
     </dataset>
   </datasets>
+
   <input-events>
     <data-in name="input" dataset="rawlogs">
       <instance>${coord:current(coord:tzOffset() / 60)}</instance>
@@ -35,6 +37,7 @@
       <instance>${coord:current(1 + (coord:tzOffset() / 60))}</instance>
     </data-in>
   </input-events>
+
   <action>
     <workflow>
       <app-path>${workflowRoot}/processing.xml</app-path>
