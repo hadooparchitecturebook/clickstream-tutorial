@@ -24,7 +24,7 @@
   <datasets>
     <dataset name="rawlogs" frequency="${coord:hours(1)}"
              initial-instance="${initialDataset}" timezone="America/Los_Angeles">
-      <uri-template>hdfs://localhost:8020/etl/BI/casualcyclist/clicks/rawlogs/year=${YEAR}/month=${MONTH}/day=${DAY}</uri-template>
+      <uri-template>/etl/BI/casualcyclist/clicks/rawlogs/year=${YEAR}/month=${MONTH}/day=${DAY}</uri-template>
       <done-flag></done-flag>
     </dataset>
   </datasets>
